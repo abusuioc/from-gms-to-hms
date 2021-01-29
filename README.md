@@ -8,8 +8,6 @@ If you landed here, I'm confident you:
 
 
 
-We can think of 3 steps:
-
 
 
 ### Step 1: Create an AppGallery account
@@ -23,13 +21,19 @@ Visit: https://developer.huawei.com/consumer/en/appgallery/ and look for the “
 
 
 
+
+
 ### Step 2: Create listings for each app
 
 Similar to GP, you'll basically create a new app in AG -> *My apps* and customize its appearance on the store: upload an icon, descriptions, screenshots and so on. Explanations are provided directly in the portal, but if you ever get stuck you can find the full documentation [here]( https://developer.huawei.com/consumer/en/doc/distribution/app/agc-create_app).
 
-I would like to quickly explain the concept of a [project](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-project-introduction). A project is a collection of resources and settings such as: API management, user and apps data, data storage location, authorized app signatures, etc. A project can contain multiple apps that share the same configuration. On AG each app is identified by an appId and has a unique package name.
+##### What's an AG project and how is it different to an app?
 
-Projects are needed *only* when a HMS integration is planned.
+A [project](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-project-introduction) is a collection of resources and settings such as: API management, user and apps data, data storage location, authorized app signatures, etc. A project can contain multiple apps that share the same configuration. On AG each app is identified by a unique integer named *appId* . A further requirement - same as on GP - is that the app needs to have an unique package name = [applicationId](https://developer.android.com/studio/build/application-id).
+
+Projects are needed *only* if you plan to integrate HMS at some point.
+
+
 
 
 
@@ -38,6 +42,8 @@ Projects are needed *only* when a HMS integration is planned.
 This step is optional as you can directly skip to *step_4* if you wish to integrate HMS in your apps now.
 
 But there could be 2 reasons why this step would still make sense.
+
+
 
 #### Reason 1: could it be that you have no Google Play Services dependencies at all in your apps?
 
@@ -69,28 +75,37 @@ If you use [Google Play App Signing](https://developer.android.com/studio/publis
 
 1. Sign with the same key for both GP and AG:
 
-   This makes sense especially if at *step_4* you plan to opt for a GMS&HMS integration (ffw there to read more). Since there is only one build (and only one package name), it's convenient to have also only one binary - that can be uploaded at the same time to both GP and AG. Furthermore, on Huawei devices still having GMS, both app stores exist for now, but there is no guarantee that GP will still be available in the future. What you want in that case is to have a seamless upgrade experience where both GP and AG - because both stores can update your app since the signature is the same.
+   This makes sense especially if at *step_4* you plan to opt for a GMS&HMS integration (ffw there to read more). Since there is only one build (therefore an unique *applicationId*), it's convenient to have also only one binary - that can be uploaded at the same time to both GP and AG. Furthermore, on Huawei devices still having GMS, both app stores exist for now, but there is no guarantee that GP will still be available in the future. What you want in that case is to have a seamless upgrade experience where both GP and AG - because both stores can update your app since the signature is the same.
 
-   **Don't use the same key** if you know for sure you want to have a different build for HMS, but you wish to keep the same package name - because competing updates from GP and AG (on devices having both) can make the user experience weird: i.e. version `v` (coming from GP) has Google Maps, the next one `v+1` happens to be from AG, so it uses HMS Maps and maybe later GP updates to `v+2` and users are back on Google Maps.
+   **Don't use the same key** if you know for sure you want to have a different build for HMS, but you wish to keep the same *applicationId* - because competing updates from GP and AG (on devices having both) can make the user experience weird: i.e. version `v` (coming from GP) has Google Maps, the next one `v+1` happens to be from AG, so it uses HMS Maps and maybe later GP updates to `v+2` and users are back on Google Maps.
 
 2. Sign with different keys:
 
-   Opting for this option on purpose makes sense in the situation you wish to distinguish updates coming via AG from the ones from GP if the package name stays the same. Different signatures means that all updates will come only from the app store used to download the app in the first place. The other store will silently fail to update the app because signatures don't match.
+   Opting for this option on purpose makes sense in the situation you wish to distinguish updates coming via AG from the ones from GP for the same *applicationId*. Different signatures means that all updates will come only from the app store used to download the app in the first place. The other store will silently fail to update the app because signatures don't match.
 
 **To summarize this step**, all you need to do for now is to to complete the app listing at *step_2* by creating a new release and uploading an apk/bundle. More details [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app).
+
+
+
+
 
 ### Step 4: Integrate HMS into your apps
 
 Before using any of the HMS SDKs  (see full offering here: https://developer.huawei.com/consumer/en/hms) there are several configuration steps.
 
-They are detailed [here](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-get-started) and again in this [codelab](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#0), but let's do a short summary of every step:
+They are detailed [here](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-get-started) and again in this [codelab](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#0), but let's do a short summary of every step.
 
 ##### Create a project
 
+It can have any name (not visible to users) and you need to link to it the app(s) that will share the project's configuration.
 
+##### Generate a agconnect-services.json
 
-##### agconnect-services.json
+Your app's Android project has to contain a special configuration file - same as for Google Play and their *google-services.json*. This file can be easily generated from AG immediately after creating a new app on the portal or at any time from *App Information* under *General information*. Later changes in the used AG APIs could add additional information to the file, so you might need to re-generate it.
 
-To use any of the HMS SDKs (see full offering here: https://developer.huawei.com/consumer/en/hms) an app's Android project has to contain a special configuration file - same as for Google Play and their *google-services.json*.
+Back to your Android project, place the file under the module that uses HMS SDKs (usually that's the main module  */app*). 
 
-The file can be easily generated from AG immediately after creating a new app on the portal.
+*What if you have multiple build variants and/or flavors that alter the applicationId?*
+
+Most of the time you will have one production flavor (that needs to go live on the store) and other flavors for different testing purposes, each one with a different *applicationId*. For AG they count as different apps (since the *applicationId* is different), therefore, you will need to create in AG, under the same project, a new app entry for every *applicationId*. You *only* have to configure the package name information (equal to the *applicationId*) - no need to fill anything additional. Then generate a different *agconnect-services.json* file for each app and place them under the respective source sets. See an example [here](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-config-flavor).
+
