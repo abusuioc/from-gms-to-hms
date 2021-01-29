@@ -23,9 +23,19 @@ Visit: https://developer.huawei.com/consumer/en/appgallery/ and look for the “
 
 
 
-### Step 2: Publish the apps - as they are - on AppGallery
+### Step 2: Create listings for each app
 
-This step is optional as you can directly skip to step 3 if you wish to integrate HMS in your apps now.
+Similar to GP, you'll basically create a new app in AG -> *My apps* and customize its appearance on the store: upload an icon, descriptions, screenshots and so on. Explanations are provided directly in the portal, but if you ever get stuck you can find the full documentation [here]( https://developer.huawei.com/consumer/en/doc/distribution/app/agc-create_app).
+
+I would like to quickly explain the concept of a [project](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-project-introduction). A project is a collection of resources and settings such as: API management, user and apps data, data storage location, authorized app signatures, etc. A project can contain multiple apps that share the same configuration. On AG each app is identified by an appId and has a unique package name.
+
+Projects are needed *only* when a HMS integration is planned.
+
+
+
+### Step 3: Publish the apps - as they are - on AppGallery
+
+This step is optional as you can directly skip to *step_4* if you wish to integrate HMS in your apps now.
 
 But there could be 2 reasons why this step would still make sense.
 
@@ -43,7 +53,7 @@ Furthermore, parts of Firebase are counting on GMS to function properly: https:/
 
 There are plenty of users on Huawei devices that still have GMS, devices released before the US trade ban was enforced. Those devices are still quite powerful - which means they will most likely stick around for the time being. Although it's true that users can go to GP to find and download your apps, sometimes they don't - simply because they might be more familiar with AG that benefits from better exposure on those devices.
 
-**How to distribute the app only on GMS powered devices**
+##### How to distribute the app only on GMS powered devices
 
 Before submitting a new version, specify in the *Review information* text field: `only GMS`. Having trouble locating the field? Instructions [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app#h1-1605230887778) , under *Completing other version information*.
 
@@ -59,7 +69,7 @@ If you use [Google Play App Signing](https://developer.android.com/studio/publis
 
 1. Sign with the same key for both GP and AG:
 
-   This makes sense especially if at Step3 you plan to opt for a GMS&HMS integration (ffw there to read more). Since there is only one build (and only one package name), it's convenient to have also only one binary - that can be uploaded at the same time to both GP and AG. Furthermore, on Huawei devices still having GMS, both app stores exist for now, but there is no guarantee that GP will still be available in the future. What you want in that case is to have a seamless upgrade experience where both GP and AG - because both stores can update your app since the signature is the same.
+   This makes sense especially if at *step_4* you plan to opt for a GMS&HMS integration (ffw there to read more). Since there is only one build (and only one package name), it's convenient to have also only one binary - that can be uploaded at the same time to both GP and AG. Furthermore, on Huawei devices still having GMS, both app stores exist for now, but there is no guarantee that GP will still be available in the future. What you want in that case is to have a seamless upgrade experience where both GP and AG - because both stores can update your app since the signature is the same.
 
    **Don't use the same key** if you know for sure you want to have a different build for HMS, but you wish to keep the same package name - because competing updates from GP and AG (on devices having both) can make the user experience weird: i.e. version `v` (coming from GP) has Google Maps, the next one `v+1` happens to be from AG, so it uses HMS Maps and maybe later GP updates to `v+2` and users are back on Google Maps.
 
@@ -67,8 +77,20 @@ If you use [Google Play App Signing](https://developer.android.com/studio/publis
 
    Opting for this option on purpose makes sense in the situation you wish to distinguish updates coming via AG from the ones from GP if the package name stays the same. Different signatures means that all updates will come only from the app store used to download the app in the first place. The other store will silently fail to update the app because signatures don't match.
 
+**To summarize this step**, all you need to do for now is to to complete the app listing at *step_2* by creating a new release and uploading an apk/bundle. More details [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app).
+
+### Step 4: Integrate HMS into your apps
+
+Before using any of the HMS SDKs  (see full offering here: https://developer.huawei.com/consumer/en/hms) there are several configuration steps.
+
+They are detailed [here](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-get-started) and again in this [codelab](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#0), but let's do a short summary of every step:
+
+##### Create a project
 
 
-### Step 3: Integrate HMS into your apps
 
-<WIP>
+##### agconnect-services.json
+
+To use any of the HMS SDKs (see full offering here: https://developer.huawei.com/consumer/en/hms) an app's Android project has to contain a special configuration file - same as for Google Play and their *google-services.json*.
+
+The file can be easily generated from AG immediately after creating a new app on the portal.
