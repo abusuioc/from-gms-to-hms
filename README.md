@@ -8,8 +8,6 @@ If you landed here, I'm confident you:
 
 
 
-
-
 ### Step 1: Create an AppGallery account
 
 Visit: https://developer.huawei.com/consumer/en/appgallery/ and look for the “Sign up” in the upper-right corner of the page. The process will guide you trough the following steps:
@@ -21,19 +19,15 @@ Visit: https://developer.huawei.com/consumer/en/appgallery/ and look for the “
 
 
 
-
-
 ### Step 2: Create listings for each app
 
 Similar to GP, you'll basically create a new app in AG -> *My apps* and customize its appearance on the store: upload an icon, descriptions, screenshots and so on. Explanations are provided directly in the portal, but if you ever get stuck you can find the full documentation [here]( https://developer.huawei.com/consumer/en/doc/distribution/app/agc-create_app).
 
 ##### What's an AG project and how is it different to an app?
 
-A [project](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-project-introduction) is a collection of resources and settings such as: API management, user and apps data, data storage location, authorized app signatures, etc. A project can contain multiple apps that share the same configuration. On AG each app is identified by a unique integer named *appId* . A further requirement - same as on GP - is that the app needs to have an unique package name = [applicationId](https://developer.android.com/studio/build/application-id).
+A [project](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-project-introduction) is a collection of resources and settings such as: API management, user and apps data, data storage location, authenticated signing certificates, etc. A project can contain multiple apps that share the same configuration. On AG each app is identified by a unique integer named *appId* . A further requirement - same as on GP - is that the app needs to have an unique package name = [applicationId](https://developer.android.com/studio/build/application-id).
 
 Projects are needed *only* if you plan to integrate HMS at some point.
-
-
 
 
 
@@ -87,21 +81,19 @@ If you use [Google Play App Signing](https://developer.android.com/studio/publis
 
 
 
-
-
-### Step 4: Integrate HMS into your apps
+### Step 4: Preparations for the HMS integration into your apps
 
 Before using any of the HMS SDKs  (see full offering here: https://developer.huawei.com/consumer/en/hms) there are several configuration steps.
 
 They are detailed [here](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-get-started) and again in this [codelab](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#0), but let's do a short summary of every step.
 
-##### Create a project
+##### Create a project in AG
 
-It can have any name (not visible to users) and you need to link to it the app(s) that will share the project's configuration.
+It can have any name (not visible to users) and you need to link to it the app(s) that will share the project's configuration. Create a new project from AG -> *My projects*.
 
 ##### Generate a agconnect-services.json
 
-Your app's Android project has to contain a special configuration file - same as for Google Play and their *google-services.json*. This file can be easily generated from AG immediately after creating a new app on the portal or at any time from *App Information* under *General information*. Later changes in the used AG APIs could add additional information to the file, so you might need to re-generate it.
+Your app's Android project has to contain a special configuration file - same as for Google Play and the *google-services.json*. This file can be easily generated from AG immediately after creating a new app on the portal or at any time from *App Information* under *General information*. Later changes in the used AG APIs could add additional information to the file, so you might need to re-generate it.
 
 Back to your Android project, place the file under the module that uses HMS SDKs (usually that's the main module  */app*). 
 
@@ -109,3 +101,54 @@ Back to your Android project, place the file under the module that uses HMS SDKs
 
 Most of the time you will have one production flavor (that needs to go live on the store) and other flavors for different testing purposes, each one with a different *applicationId*. For AG they count as different apps (since the *applicationId* is different), therefore, you will need to create in AG, under the same project, a new app entry for every *applicationId*. You *only* have to configure the package name information (equal to the *applicationId*) - no need to fill anything additional. Then generate a different *agconnect-services.json* file for each app and place them under the respective source sets. See an example [here](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-config-flavor).
 
+##### Manage APIs
+
+Go to the current project in AG and under *Manage APIs* you can toggle on/off various APIs. Some will require to generate a new *agconnect-services.json*.
+
+##### Authenticate your app
+
+AG will reject any API requests if your app's signing configuration is unknown to AG. To add (any number of) signing certificate SHA-256 fingerprints, simply go the current project in AG and look under *General information* for *SHA-256 certificate fingerprint* : press the add icon and paste the fingerprints you wish to authenticate. As guessed, the debug variant needs to authenticate as well.
+
+[This](https://developers.google.com/android/guides/client-auth) is a quick guide on how to retrieve the fingerprint for all the signing configurations. Just remember AG accepts only [SHA-256](https://en.wikipedia.org/wiki/SHA-2).
+
+##### Configure the build.gradle files
+
+Into your Android project's <u>root</u> *build.gradle*:
+
+```groovy
+allprojects {
+    repositories {  
+		... 
+		maven {url 'https://developer.huawei.com/repo/'}  
+	}  
+}
+...
+buildscript {  
+	repositories {  
+		...
+		maven {url 'https://developer.huawei.com/repo/'}  
+    }
+    ...
+    dependencies {  
+		classpath 'com.huawei.agconnect:agcp:1.4.2.301' 
+	}  
+}
+```
+
+Into your project's module (i.e. *app/build.gradle*)
+
+```groovy
+apply plugin: 'com.huawei.agconnect'
+...
+dependencies {       
+	implementation 'com.huawei.agconnect:agconnect-core:1.4.2.301'     
+}
+```
+
+Check the newest version of any dependency [here](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/hmssdk-kit-0000001050042513#EN-US_TOPIC_0000001050042513__section19904112219278).
+
+
+
+### Step 5: Integrate HMS SDKs in your app
+
+TO BE CONTINUED ...
