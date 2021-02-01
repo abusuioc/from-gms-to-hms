@@ -76,6 +76,8 @@ If you use [Google Play App Signing](https://developer.android.com/studio/publis
 2. Sign with different keys:
 
    Opting for this option on purpose makes sense in the situation you wish to distinguish updates coming via AG from the ones from GP for the same *applicationId*. Different signatures means that all updates will come only from the app store used to download the app in the first place. The other store will silently fail to update the app because signatures don't match.
+   
+   **Warning**: [Google Play Protect](https://developers.google.com/android/play-protect) might block the initial app installation from AG since it detects that the version on GP is signed with a different key. You could try to file an appeal with Google [here](https://support.google.com/googleplay/android-developer/answer/2992033) , but their answers are not always satisfying: the approval process is as obscure and random as the initial app blocking.  To generalize from some data points: apps with lots of downloads on GP have a higher chance of a positive outcome of the appeal.
 
 **To summarize this step**, all you need to do for now is to to complete the app listing at *step_2* by creating a new release and uploading an apk/bundle. More details [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app).
 
