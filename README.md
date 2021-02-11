@@ -33,7 +33,7 @@ Projects are needed *only* if you plan to integrate HMS at some point.
 
 ### Step 3: Publish the apps - as they are - on AppGallery
 
-This step is optional as you can directly skip to *step_4* if you wish to integrate HMS in your apps now.
+This step is optional as you can directly skip to [Step 4](#step-4-preparations-for-the-hms-integration-into-your-apps) if you wish to integrate HMS in your apps now.
 
 But there could be 2 reasons why this step would still make sense.
 
@@ -43,7 +43,7 @@ But there could be 2 reasons why this step would still make sense.
 
 Just a quick reminder: all that's pure Android still works on HMS devices, only the GMS don't.
 
-Generally speaking, any dependency starting with `com.google.android.gms:play-services-` is an indication you rely on GMS; a more or less complete list here: https://developers.google.com/android/guides/setup#split 
+Generally speaking, any dependency starting with `com.google.android.gms:play-services-` is an indication you rely on GMS. Google provides a list here: https://developers.google.com/android/guides/setup#list-dependencies
 
 Furthermore, parts of Firebase are counting on GMS to function properly: https://firebase.google.com/docs/android/android-play-services (as you can see, many services were recently decoupled from GMS)
 
@@ -63,13 +63,13 @@ It’s not possible to distribute only on HMS devices. The choices are only 2: `
 
 ##### Signing considerations
 
-Anticipating the next step and how to grow the apps further inside AG it's maybe a good time now to discuss different choices when it comes to app signing.
+Anticipating the [next step](#step-4-preparations-for-the-hms-integration-into-your-apps) and how to grow the apps further inside AG it's maybe a good time now to discuss different choices when it comes to app signing.
 
 If you use [Google Play App Signing](https://developer.android.com/studio/publish/app-signing#app-signing-google-play) then it's obvious you will have to use a different signing key for AG as Google controls now the signing key and you have no access to it anymore (you only have the upload key). 
 
 1. Sign with the same key for both GP and AG:
 
-   This makes sense especially if at *step_4* you plan to opt for a GMS&HMS integration (ffw there to read more). Since there is only one build (therefore an unique *applicationId*), it's convenient to have also only one binary - that can be uploaded at the same time to both GP and AG. Furthermore, on Huawei devices still having GMS, both app stores exist for now, but there is no guarantee that GP will still be available in the future. What you want in that case is to have a seamless upgrade experience where both GP and AG - because both stores can update your app since the signature is the same.
+   This makes sense especially if at [step 5](#step-5-integrate-hms-sdks-in-your-app) you plan to opt for including both GMS and HMS SDKs in the same build/binary. Since there is only one build (therefore an unique *applicationId*), it's convenient to have also only one binary - that can be uploaded at the same time to both GP and AG. Furthermore, on Huawei devices still having GMS, both app stores exist for now, but there is no guarantee that GP will still be available in the future. What you want in that case is to have a seamless upgrade experience where both GP and AG - because both stores can update your app since the signature is the same.
 
    **Don't use the same key** if you know for sure you want to have a different build for HMS, but you wish to keep the same *applicationId* - because competing updates from GP and AG (on devices having both) can make the user experience weird: i.e. version `v` (coming from GP) has Google Maps, the next one `v+1` happens to be from AG, so it uses HMS Maps and maybe later GP updates to `v+2` and users are back on Google Maps.
 
@@ -79,7 +79,7 @@ If you use [Google Play App Signing](https://developer.android.com/studio/publis
    
    **Warning**: [Google Play Protect](https://developers.google.com/android/play-protect) might block the initial app installation from AG since it detects that the version on GP is signed with a different key. You could try to file an appeal with Google [here](https://support.google.com/googleplay/android-developer/answer/2992033) , but their answers are not always satisfying: the approval process is as obscure and random as the initial app blocking.  To generalize from some data points: apps with lots of downloads on GP have a higher chance of a positive outcome of the appeal.
 
-**To summarize this step**, all you need to do for now is to to complete the app listing at *step_2* by creating a new release and uploading an apk/bundle. More details [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app).
+**To summarize this step**, all you need to do for now is to to complete the app listing at [step 2](#step-2-create-listings-for-each-app) by creating a new release and uploading an apk/bundle. More details [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app).
 
 
 
@@ -153,4 +153,111 @@ Check the newest version of any dependency [here](https://developer.huawei.com/c
 
 ### Step 5: Integrate HMS SDKs in your app
 
+##### Add HMS to the current GMS build or create a separate variant for HMS only?
+
+Let's quickly get this out of the way: having both GMS and HMS SDKs in the same build & binary poses no problem or compatibility issues and both GP and AG accept such apps.
+
+In-app-purchases might be a sensitive topic, as [GP explicitly forbids the usage of other payment systems](https://support.google.com/googleplay/android-developer/answer/9858738)  and - *although it's not the case now* - it might in the future scan your app binary and simply reject the app based on the fact that it contains another IAP SDK (even if not used on GMS phones). Besides this, it makes sense to go separate variants if you're sensitive about increasing your app size (although each HMS SDK is merely a couple hundreds KB) or you're simply more comfortable with different [source sets](https://developer.android.com/studio/build/build-variants#sourcesets) for GMS and HMS. 
+
+Otherwise, having GMS and HMS together - and deciding at runtime which one to use based on availability - has its advantages: 
+
+- a single resulting binary to upload to both GP and AG
+- a natural upgrade path in AG - once the already published GMS-only binary (discussed at [step 3](#how-to-distribute-the-app-only-on-gms-powered-devices)) receives support for HMS
+- allows the use of location and maps wrappers (more about that [later](#wrappers)) which instantly add equivalent HMS support to already existent GMS code
+
+
+
+##### Detect at runtime what mobile services are available on the device
+
+Perhaps you already test the device if it has GMS with a snippet like this:
+
+```java
+boolean isGmsAvailable(android.content.Context context) {
+	return com.google.android.gms.common.GoogleApiAvailability
+        .getInstance()
+        .isGooglePlayServicesAvailable(context) ==
+        com.google.android.gms.common.ConnectionResult.SUCCESS;
+}
+```
+
+The API for doing the HMS check is identical:
+
+```java
+boolean isHmsAvailable(android.content.Context context) {
+    return com.huawei.hms.api.HuaweiApiAvailability
+        .getInstance()
+        .isHuaweiMobileServicesAvailable(context) ==
+        com.huawei.hms.api.ConnectionResult.SUCCESS;
+}
+```
+
+Or, maybe you have code that makes use of more features from [GoogleApiAvailability](https://developers.google.com/android/reference/com/google/android/gms/common/GoogleApiAvailability)  besides a simple check, maybe something like :
+
+```java
+ class MyActivity extends Activity {
+        final int ANY_INTEGER_REALLY = 16041982;
+        final int REQUEST_CODE_GMS_CHECK = ANY_INTEGER_REALLY;
+        final int RESULT_AVAILABLE = Activity.RESULT_OK;
+        final int RESULT_UNAVAILABLE = Activity.RESULT_FIRST_USER + 1;
+
+        @Override
+        protected void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            if (savedInstanceState == null) {
+                startGmsCheck();
+            }
+        }
+
+        void startGmsCheck() {
+            final com.google.android.gms.common.GoogleApiAvailability apiAvailability = com.google.android.gms.common.GoogleApiAvailability.getInstance();
+            final int availabilityCheckResult = apiAvailability.isGooglePlayServicesAvailable(this);
+            if (availabilityCheckResult == com.google.android.gms.common.ConnectionResult.SUCCESS) {
+                onActivityResult(REQUEST_CODE_GMS_CHECK, RESULT_AVAILABLE, null);
+            } else if (
+                    apiAvailability.isUserResolvableError(availabilityCheckResult)
+                            && apiAvailability.showErrorDialogFragment(
+                            this, availabilityCheckResult, REQUEST_CODE_GMS_CHECK)) {
+                // user can do something about the missing GMS on the device -> receive the result via the activity's onActivityResult()
+            } else {
+                onActivityResult(
+                        REQUEST_CODE_GMS_CHECK, RESULT_UNAVAILABLE, null);
+            }
+        }
+
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == REQUEST_CODE_GMS_CHECK) {
+                if (resultCode == RESULT_AVAILABLE) {
+                    // GMS was already available or was made available by the user's action
+                } else {
+                    // GMS is not available and cannot be made available on this device
+                }
+            }
+        }
+    }
+}
+```
+
+Again, the API is identical for HMS, so you could add a:
+
+```java
+void startHmsCheck() {
+    final com.huawei.hms.api.HuaweiApiAvailability apiAvailability = com.huawei.hms.api.HuaweiApiAvailability.getInstance();
+    final int availabilityCheckResult = apiAvailability.isHuaweiMobileNoticeAvailable(this);
+    if (availabilityCheckResult == com.huawei.hms.api.ConnectionResult.SUCCESS) {
+        onActivityResult(REQUEST_CODE_HMS_CHECK, RESULT_AVAILABLE, null);
+    } else if (apiAvailability.isUserResolvableError(availabilityCheckResult)
+               && apiAvailability.showErrorDialogFragment(
+                   this, availabilityCheckResult, REQUEST_CODE_HMS_CHECK)) {
+                // user can do something about the missing HMS on the device -> receive the result via the activity's onActivityResult()
+    } else {
+        onActivityResult(REQUEST_CODE_HMS_CHECK, RESULT_UNAVAILABLE, null);
+    }
+}
+```
+
+
+
 TO BE CONTINUED ...
+
