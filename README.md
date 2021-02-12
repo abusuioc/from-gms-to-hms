@@ -307,3 +307,14 @@ void continueWithGmsOrHmsFeatures(int requestCode, int resultCode) {
 
 
 
+##### Wrappers
+
+When you opt to include both GMS and HMS SDKs in the same build, it would be very convenient if you could add support for HMS without changing your codebase. The wrapper libraries make it possible with just a package rename/replace - from the GMS packages to the wrapper's packages. A rename is all it takes, because the wrapper's API is completely identical to the GMS SDK it wraps. Then, the wrapper takes care of routing the calls to GMS or HMS - depending on the availability on the device  - and of adapting the HMS differences to the GMS interface.
+
+Available to use now are these 2 wrapper libraries for:
+
+- Fused Location: https://github.com/abusuioc/hms-gms-wrapper-location
+- Maps: https://github.com/franalma/MapsWrapper (with a Kotlin only variant: https://github.com/m0skit0/maps-wrapper)
+
+
+
