@@ -191,14 +191,14 @@ boolean isHmsAvailable(android.content.Context context) {
 }
 ```
 
-Or, maybe you have code that makes use of more features from [GoogleApiAvailability](https://developers.google.com/android/reference/com/google/android/gms/common/GoogleApiAvailability)  besides a simple check, maybe something like :
+Or, maybe you have code that makes use of more features from [GoogleApiAvailability](https://developers.google.com/android/reference/com/google/android/gms/common/GoogleApiAvailability)  : besides a simple check, allow users to react on the missing GMS. Collect the result and decide how to proceed ( `continueWithGmsFeatures()` or `continueWithoutAnyMobileServicesFeatures()`) in a single place: the activity's [onActivityResult](https://developer.android.com/reference/android/app/Activity#onActivityResult(int,%20int,%20android.content.Intent)) as illustrated by this example: 
 
 ```java
  class MyActivity extends Activity {
         final int ANY_INTEGER_REALLY = 16041982;
         final int REQUEST_CODE_GMS_CHECK = ANY_INTEGER_REALLY;
-        final int RESULT_AVAILABLE = Activity.RESULT_OK;
-        final int RESULT_UNAVAILABLE = Activity.RESULT_FIRST_USER + 1;
+        final int AVAILABLE = Activity.RESULT_OK;
+        final int UNAVAILABLE = Activity.RESULT_FIRST_USER + 1;
 
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -212,7 +212,7 @@ Or, maybe you have code that makes use of more features from [GoogleApiAvailabil
             final com.google.android.gms.common.GoogleApiAvailability apiAvailability = com.google.android.gms.common.GoogleApiAvailability.getInstance();
             final int availabilityCheckResult = apiAvailability.isGooglePlayServicesAvailable(this);
             if (availabilityCheckResult == com.google.android.gms.common.ConnectionResult.SUCCESS) {
-                onActivityResult(REQUEST_CODE_GMS_CHECK, RESULT_AVAILABLE, null);
+                onActivityResult(REQUEST_CODE_GMS_CHECK, AVAILABLE, null);
             } else if (
                     apiAvailability.isUserResolvableError(availabilityCheckResult)
                             && apiAvailability.showErrorDialogFragment(
@@ -220,7 +220,7 @@ Or, maybe you have code that makes use of more features from [GoogleApiAvailabil
                 // user can do something about the missing GMS on the device -> receive the result via the activity's onActivityResult()
             } else {
                 onActivityResult(
-                        REQUEST_CODE_GMS_CHECK, RESULT_UNAVAILABLE, null);
+                        REQUEST_CODE_GMS_CHECK, UNAVAILABLE, null);
             }
         }
 
@@ -228,10 +228,10 @@ Or, maybe you have code that makes use of more features from [GoogleApiAvailabil
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
             if (requestCode == REQUEST_CODE_GMS_CHECK) {
-                if (resultCode == RESULT_AVAILABLE) {
-                    // GMS was already available or was made available by the user's action
-                } else {
-                    // GMS is not available and cannot be made available on this device
+                if (resultCode == AVAILABLE) {
+                    continueWithGmsFeatures();
+                } else {();
+                    continueWithoutAnyMobileServicesFeatures();
                 }
             }
         }
@@ -239,25 +239,71 @@ Or, maybe you have code that makes use of more features from [GoogleApiAvailabil
 }
 ```
 
-Again, the API is identical for HMS, so you could add a:
+Again, the [HMS equivalent API](https://developer.huawei.com/consumer/en/doc/HMSCore-References-V5/huaweiapiavailability-0000001050121134-V5) is identical, so you could add a new constant `REQUEST_CODE_HMS_CHECK` and a method to check and respond to a missing HMS Core:
 
 ```java
 void startHmsCheck() {
     final com.huawei.hms.api.HuaweiApiAvailability apiAvailability = com.huawei.hms.api.HuaweiApiAvailability.getInstance();
     final int availabilityCheckResult = apiAvailability.isHuaweiMobileNoticeAvailable(this);
     if (availabilityCheckResult == com.huawei.hms.api.ConnectionResult.SUCCESS) {
-        onActivityResult(REQUEST_CODE_HMS_CHECK, RESULT_AVAILABLE, null);
+        onActivityResult(REQUEST_CODE_HMS_CHECK, AVAILABLE, null);
     } else if (apiAvailability.isUserResolvableError(availabilityCheckResult)
                && apiAvailability.showErrorDialogFragment(
                    this, availabilityCheckResult, REQUEST_CODE_HMS_CHECK)) {
                 // user can do something about the missing HMS on the device -> receive the result via the activity's onActivityResult()
     } else {
-        onActivityResult(REQUEST_CODE_HMS_CHECK, RESULT_UNAVAILABLE, null);
+        onActivityResult(REQUEST_CODE_HMS_CHECK, UNAVAILABLE, null);
+    }
+}
+```
+
+In theory, you can install the latest HMS Core on any arm/arm64 device. Either from AG - after installing first AG from [here](https://appgallery.huawei.com/#/app/C27162) - or directly from this [direct link to the apk](https://appgallery.cloud.huawei.com/appdl/C10132067). But maybe it makes sense to guide users into updating/installing HMS Core only on Huawei devices and that can be quickly checked:
+
+```java
+boolean isHuaweiDevice() {
+    return "huawei".equalsIgnoreCase(android.os.Build.MANUFACTURER);
+}
+```
+
+Putting it all together and collecting all the outcomes again in `MyActivity.onActivityResult`:
+
+```java
+@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (savedInstanceState == null) {
+        startGmsHmsCheck();
+    }
+}
+
+void startGmsHmsCheck() {
+    if (isGmsAvailable(this)) {
+        startGmsCheck(); //or directly call: continueWithGmsFeatures();
+    } else if (isHmsAvailable(this)) {
+        startHmsCheck(); //or directly call: continueWithHmsFeatures();
+    } else if (isHuaweiDevice()) {
+        startHmsCheck();
+    } else {
+        startGmsCheck();
+    }
+}
+
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    continueWithGmsOrHmsFeatures(requestCode, resultCode);
+}
+
+void continueWithGmsOrHmsFeatures(int requestCode, int resultCode) {
+    if (requestCode == REQUEST_CODE_GMS_CHECK && resultCode == AVAILABLE) {
+        continueWithGmsFeatures();
+    } else if (requestCode == REQUEST_CODE_HMS_CHECK && resultCode == AVAILABLE) {
+        continueWithHmsFeatures();
+    } else {
+        continueWithoutAnyMobileServicesFeatures();
     }
 }
 ```
 
 
-
-TO BE CONTINUED ...
 
