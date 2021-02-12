@@ -344,6 +344,7 @@ First of all, if you're using an SDK from the following push notification provid
 | [Netmera](https://www.netmera.com/push-notifications-a-journey-into-netmera-platform/) | https://netmera.readme.io/docs/quick-start-4                 |
 | [OneSignal](https://onesignal.com/)                          | https://documentation.onesignal.com/docs/huawei-sdk-setup    |
 | [Plot Projects](https://www.plotprojects.com/)               | [https://files.plotprojects.com/documentation/#Overview](https://files.plotprojects.com/documentation/) |
+| [Proxi Cloud](https://developer.proxi.cloud/)                | https://developer.proxi.cloud/android/hcm-integration/       |
 | [Webinstats](https://www.webinstats.com/)                    | https://www.webinstats.com/blog/en/help/setup/#pushandroidconfig |
 | [WonderPUSH](https://www.wonderpush.com/)                    | https://docs.wonderpush.com/docs/huawei-mobile-services-hms-push-notification-support |
 | [Vizury](https://www.vizury.com/)                            | https://help.engage360.vizury.com/article/44-huawei-sdk-integration-guide |
