@@ -318,3 +318,38 @@ Available to use now are these 2 wrapper libraries for:
 
 
 
+##### Push notifications
+
+Being by far the most used feature that depends on GMS, let's look at the challenges of making your apps receive push notifications on HMS devices.
+
+First of all, if you're using an SDK from the following push notification providers, they already include support for the [HMS Push Kit](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/service-introduction-0000001050040060).  Since you already configured your app at [step 4](#step-4-preparations-for-the-hms-integration-into-your-apps) it might just work out of the box (read more in the description link if there are additional steps required):
+
+| Push notifications provider                                  | Provider's description of the HMS integration steps          |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [Airship](https://www.airship.com/)                          | https://docs.airship.com/platform/android/getting-started/#hms |
+| [Accengage](https://www.accengage.com/)                      | Uses Airship                                                 |
+| [Batch](https://doc.batch.com/)                              | https://doc.batch.com/android/huawei                         |
+| [Braze](https://www.braze.com/)                              | https://www.braze.com/docs/developer_guide/platform_integration_guides/android/push_notifications/huawei_integration/ |
+| [Catch Media](https://docs.catchmedia.com/)                  | https://docs.catchmedia.com/SDK/Android/#hms-push-notifications |
+| [CleverTap](https://clevertap.com/)                          | https://developer.clevertap.com/docs/clevertap-huawei-push-integration |
+| [Countly](https://count.ly/)                                 | https://support.count.ly/hc/en-us/articles/360037754031-Android#integrating-hms-into-your-app |
+| [dEngage](https://dengage.com/)                              | https://dev.dengage.com/push-sdk/android/huawei              |
+| [EMMA](https://emma.io/en/)                                  | https://support.emma.io/hc/en-us/articles/360014715100-Push-integration-with-Huawei |
+| [Euromessage](https://www.euromsg.com/)                      | [https://relateddigital.atlassian.net/wiki/spaces/KB/pages/908525653/FCM+and+HMS+Integration+to+RMC ](https://relateddigital.atlassian.net/wiki/spaces/KB/pages/908525653/FCM+and+HMS+Integration+to+RMC) |
+| [InDigitall](https://indigitall.com/english)                 | https://docs.indigitall.com/es/indigitallsetup/mobilepushquickstart/android.html |
+| [Insider](https://useinsider.com/mobile-app/)                | https://mobile.useinsider.com/documentation?section=6&subsection=3 |
+| [Kumulos](https://www.kumulos.com/)                          | https://docs.kumulos.com/integration/android/                |
+| [MFMS](https://mfms.com/page/push)                           | https://mfms.com/page/notification                           |
+| [MoEngage](https://www.moengage.com/)                        | https://docs.moengage.com/docs/dashboard-configuring-huawei-push |
+| [Netmera](https://www.netmera.com/push-notifications-a-journey-into-netmera-platform/) | https://netmera.readme.io/docs/quick-start-4                 |
+| [OneSignal](https://onesignal.com/)                          | https://documentation.onesignal.com/docs/huawei-sdk-setup    |
+| [Plot Projects](https://www.plotprojects.com/)               | [https://files.plotprojects.com/documentation/#Overview](https://files.plotprojects.com/documentation/) |
+| [Webinstats](https://www.webinstats.com/)                    | https://www.webinstats.com/blog/en/help/setup/#pushandroidconfig |
+| [WonderPUSH](https://www.wonderpush.com/)                    | https://docs.wonderpush.com/docs/huawei-mobile-services-hms-push-notification-support |
+| [Vizury](https://www.vizury.com/)                            | https://help.engage360.vizury.com/article/44-huawei-sdk-integration-guide |
+
+
+
+------
+
+**This is work in progress ... [watch](https://docs.github.com/en/github/managing-subscriptions-and-notifications-on-github/viewing-your-subscriptions#configuring-your-watch-settings-for-an-individual-repository) this repo to receive updates.**
