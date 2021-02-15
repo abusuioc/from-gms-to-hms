@@ -342,6 +342,7 @@ First of all, if you're using an SDK from the following push notification provid
 | [MFMS](https://mfms.com/page/push)                           | https://mfms.com/page/notification                           |
 | [MoEngage](https://www.moengage.com/)                        | https://docs.moengage.com/docs/dashboard-configuring-huawei-push |
 | [Netmera](https://www.netmera.com/push-notifications-a-journey-into-netmera-platform/) | https://netmera.readme.io/docs/quick-start-4                 |
+| [Notificare](https://notificare.com/)                        | https://docs.notifica.re/guides/apps/services/hms/           |
 | [OneSignal](https://onesignal.com/)                          | https://documentation.onesignal.com/docs/huawei-sdk-setup    |
 | [Plot Projects](https://www.plotprojects.com/)               | [https://files.plotprojects.com/documentation/#Overview](https://files.plotprojects.com/documentation/) |
 | [Proxi Cloud](https://developer.proxi.cloud/)                | https://developer.proxi.cloud/android/hcm-integration/       |
