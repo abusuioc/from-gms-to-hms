@@ -163,7 +163,7 @@ Otherwise, having GMS and HMS together - and deciding at runtime which one to us
 
 - a single resulting binary to upload to both GP and AG
 - a natural upgrade path in AG - once the already published GMS-only binary (discussed at [step 3](#how-to-distribute-the-app-only-on-gms-powered-devices)) receives support for HMS
-- allows the use of location and maps wrappers (more about that [later](#wrappers)) which instantly add equivalent HMS support to already existent GMS code
+- allows the use of wrappers (more about that [later](#wrappers)) which instantly add equivalent HMS support to already existent GMS code
 
 
 
@@ -315,6 +315,8 @@ Available to use now are these 2 wrapper libraries for:
 
 - Fused Location: https://github.com/abusuioc/hms-gms-wrapper-location
 - Maps: https://github.com/franalma/MapsWrapper (with a Kotlin only variant: https://github.com/m0skit0/maps-wrapper)
+
+Consider also this (Kotlin only) collection of wrappers if you accept a few changes in your code: https://github.com/bluesource/ChoiceSDK .
 
 
 
