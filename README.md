@@ -27,7 +27,7 @@ Similar to GP, you'll basically create a new app in AG -> *My apps* and customiz
 
 A [project](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-project-introduction) is a collection of resources and settings such as: API management, user and apps data, data storage location, authenticated signing certificates, etc. A project can contain multiple apps that share the same configuration. On AG each app is identified by a unique integer named *appId* . A further requirement - same as on GP - is that the app needs to have an unique package name = [applicationId](https://developer.android.com/studio/build/application-id).
 
-Projects are needed *only* if you plan to integrate HMS at some point.
+Projects are needed **only** if you plan to integrate HMS at some point (in [Step 4](#setting-the-projects-data-location)).
 
 
 
@@ -79,7 +79,7 @@ If you use [Google Play App Signing](https://developer.android.com/studio/publis
    
    **Warning**: [Google Play Protect](https://developers.google.com/android/play-protect) might block the initial app installation from AG since it detects that the version on GP is signed with a different key. You could try to file an appeal with Google [here](https://support.google.com/googleplay/android-developer/answer/2992033) , but their answers are not always satisfying: the approval process is as obscure and random as the initial app blocking.  To generalize from some data points: apps with lots of downloads on GP have a higher chance of a positive outcome of the appeal.
 
-**To summarize this step**, all you need to do for now is to to complete the app listing at [step 2](#step-2-create-listings-for-each-app) by creating a new release and uploading an apk/bundle. More details [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app).
+**To summarize this step**, all you need to do for now is to to complete the app listing at [step 2](#step-2-create-listings-for-each-app) by creating a new release and uploading an apk/aab. More details [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app).
 
 
 
@@ -91,7 +91,11 @@ They are detailed [here](https://developer.huawei.com/consumer/en/doc/developmen
 
 ##### Create a project in AG
 
-It can have any name (not visible to users) and you need to link to it the app(s) that will share the project's configuration. Create a new project from AG -> *My projects*.
+It can have any name (not visible to users) and you need to link to it the app(s) that will share the project's configuration. Create a new project from AG -> *My projects* ([direct link](https://developer.huawei.com/consumer/en/service/josp/agc/index.html#/myProject)). [Not sure why you need a project?](#whats-an-ag-project-and-how-is-it-different-to-an-app) 
+
+##### Setting the project's data location
+
+Correctly [setting the data location](https://developer.huawei.com/consumer/en/doc/development/app/agc-data-storage-location) at project creation time is important considering that many services you might later need (i.e. [push notifications](#push-notifications))  work only with the project's data location. The current options are: China, Germany (GDPR compliant), Russia and Singapore. To reduce delays at a minim, chose the data location that's closest to where most of your users are located.
 
 ##### Generate a agconnect-services.json
 
@@ -324,9 +328,11 @@ Consider also this (Kotlin only) collection of wrappers if you accept a few chan
 
 Being by far the most used feature that depends on GMS, let's look at the challenges of making your apps receive push notifications on HMS devices.
 
-First of all, if you're using an SDK from the following push notification providers, they already include support for the [HMS Push Kit](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/service-introduction-0000001050040060).  Since you already configured your app at [step 4](#step-4-preparations-for-the-hms-integration-into-your-apps) it might just work out of the box (read more in the description link if there are additional steps required):
+First of all, if you're using an SDK from the following push notifications providers, they already include support for the [HMS Push Kit](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/service-introduction-0000001050040060).  Since you already configured your app at [step 4](#step-4-preparations-for-the-hms-integration-into-your-apps) it might just work out of the box (read more in the description link if there are additional steps required).
 
-| Push notifications provider                                  | Provider's description of the HMS integration steps          |
+###### Push notifications providers integrated with HMS Push
+
+| Provider                                                     | Provider's description of the HMS integration steps          |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [Airship](https://www.airship.com/)                          | https://docs.airship.com/platform/android/getting-started/#hms |
 | [Accengage](https://www.accengage.com/)                      | Uses Airship                                                 |
@@ -351,6 +357,28 @@ First of all, if you're using an SDK from the following push notification provid
 | [Webinstats](https://www.webinstats.com/)                    | https://www.webinstats.com/blog/en/help/setup/#pushandroidconfig |
 | [WonderPUSH](https://www.wonderpush.com/)                    | https://docs.wonderpush.com/docs/huawei-mobile-services-hms-push-notification-support |
 | [Vizury](https://www.vizury.com/)                            | https://help.engage360.vizury.com/article/44-huawei-sdk-integration-guide |
+
+Otherwise, you'll need to write some code to integrate the HMS Push SDK into the mobile app and then establish a connection from your server to the HMS Push Server. This last part is optional when you wish to [send push notifications directly from the App Gallery console](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/service-config-0000001050040166). 
+
+Before anything:
+
+1. review the [project's data storage location](#setting-the-projects-data-location) because you need one especially if you plan to use topic messages and send push notifications to iOS devices.  If the data storage location is not correctly set, there are [ways to change it](https://developer.huawei.com/consumer/en/doc/development/app/agc-data-storage-location#h1-1592208499410).
+2. [enable the push notifications service](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/service-config-0000001050040166) in AG
+
+###### On the mobile app
+
+The main things you can do:
+
+- generate a push token for the current session so that you can send transactional push messages: [how to](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-client-dev-0000001050042041#EN-US_TOPIC_0000001078601368__section876955375919)
+- in addition to receiving simple notifications messages, you could register a [Service](https://developer.android.com/guide/components/services) for receiving data messages: [how to](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-client-dev-0000001050042041#EN-US_TOPIC_0000001078601368__section161573511014)
+
+###### Configure your backend to send push notifications via the HMS Push Server
+
+The HMS Push Server exposes a REST API with full specs [here](https://developer.huawei.com/consumer/en/doc/HMSCore-References-V5/https-send-api-0000001050986197-V5  ).
+
+A full example implementation is provided by Java code samples that call this API: https://github.com/HMS-Core/hms-push-serverdemo-java 
+
+Authentication is done via an access token: https://developer.huawei.com/consumer/en/doc/development/parts-Guides/generating_app_level_access_token . Currently, the validity period is 1h (returned with the token response). To refresh the token, simply call the same endpoint again. You can find an example here: https://github.com/HMS-Core/hms-push-serverdemo-java/blob/master/src/main/java/com/huawei/push/messaging/HuaweiCredential.java 
 
 
 
