@@ -47,6 +47,8 @@ Generally speaking, any dependency starting with `com.google.android.gms:play-se
 
 Furthermore, parts of Firebase are counting on GMS to function properly: https://firebase.google.com/docs/android/android-play-services (as you can see, many services were recently decoupled from GMS)
 
+Ultimately, you could use this service from Huawei called *QuickHMS* - you simply search for a dependency/framework/library and find out if it can run as it is on HMS devices (or which HMS SDKs can replace that dependency - but we'll come back to this later, during [step 5](#step-5-integrate-hms-sdks-in-your-app)): https://quickhms.com/en/compatibility-check/
+
 
 
 #### Reason 2: it's ok for now to distribute your apps only to those Huawei devices still having Google Play Services
