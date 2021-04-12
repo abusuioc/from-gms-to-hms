@@ -360,6 +360,12 @@ First of all, if you're using an SDK from the following push notifications provi
 | [WonderPUSH](https://www.wonderpush.com/)                    | https://docs.wonderpush.com/docs/huawei-mobile-services-hms-push-notification-support |
 | [Vizury](https://www.vizury.com/)                            | https://help.engage360.vizury.com/article/44-huawei-sdk-integration-guide |
 
+###### Amazon SNS
+
+Already using [SNS](https://aws.amazon.com/sns/)? Then this might be helpful: https://serverlessrepo.aws.amazon.com/applications/eu-west-1/436063517074/sns-push-hms
+
+###### DYI
+
 Otherwise, you'll need to write some code to integrate the HMS Push SDK into the mobile app and then establish a connection from your server to the HMS Push Server. This last part is optional when you wish to [send push notifications directly from the App Gallery console](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/service-config-0000001050040166). 
 
 Before anything:
