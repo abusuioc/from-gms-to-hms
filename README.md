@@ -10,10 +10,10 @@ If you landed here, I'm confident you:
 
 ### Step 1: Create an AppGallery account
 
-Visit: https://developer.huawei.com/consumer/en/appgallery/ and look for the “Sign up” in the upper-right corner of the page. The process will guide you trough the following steps:
+Visit: https://developer.huawei.com/consumer/en/appgallery/ and look for the “Sign up” in the upper-right corner of the page. The process will guide you through the following steps:
 
-1. first, create a Huawei ID (your identity in the Huawei universe, same as the Google account): this ID will be the (future) AG account holder (further explanations [here](https://developer.huawei.com/consumer/en/doc/start/registration-and-verification-0000001053628148) ). Should you need to only create a developer account (without access to AG - i.e. [just to try](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides-V5/apply-id-0000001050746503-V5) [Health Kit](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides-V5/health-introduce-0000001073401165-V5)), then please visit: https://developer.huawei.com/consumer/en/console and look again for "Sign up" in the upper-right corner.
-2. next, verify your identity as a developer or enterprise; a comparison between the benefits of both roles can be found [here](https://developer.huawei.com/consumer/en/doc/help/developerrights-0000001053174003) and the different requirements to successfully verify the identity, [here](https://developer.huawei.com/consumer/en/doc/start/ibca-0000001062388135) .
+1. first, create a Huawei ID (your identity in the Huawei universe, same as the Google account): this ID will be the (future) AG account holder (further explanations [here](https://developer.huawei.com/consumer/en/doc/start/registration-and-verification-0000001053628148) ). Should you need to only create a developer account (without access to AG - i.e. [just to try](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/apply-id-0000001050069756) [Health Kit](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/health-introduce-0000001053684429)), then please visit: https://developer.huawei.com/consumer/en/console and look again for "Sign up" in the upper-right corner.
+2. next, verify your identity as a developer or enterprise; a comparison between the benefits of both roles can be found [here](https://developer.huawei.com/consumer/en/doc/help/developerrights-0000001053174003) and the different requirements to successfully verify the identity, [here](https://developer.huawei.com/consumer/en/doc/start/ibca-0000001062388135).
 3. it takes between 1 to 2 working days to be approved (but the good part is that the account creation is FREE)
 4. now the AG account is ready to be used and you can access the portal at the same link used for registration: https://developer.huawei.com/consumer/en/appgallery/ 
 
@@ -27,7 +27,7 @@ Similar to GP, you'll basically create a new app in AG -> *My apps* and customiz
 
 A [project](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-project-introduction) is a collection of resources and settings such as: API management, user and apps data, data storage location, authenticated signing certificates, etc. A project can contain multiple apps that share the same configuration. On AG each app is identified by a unique integer named *appId* . A further requirement - same as on GP - is that the app needs to have an unique package name = [applicationId](https://developer.android.com/studio/build/application-id).
 
-Projects are needed **only** if you plan to integrate HMS at some point (in [Step 4](#setting-the-projects-data-location)).
+Projects are needed **only** if you plan to integrate HMS at some point (in [Step 4](#create-a-project-in-ag)).
 
 
 
@@ -57,7 +57,7 @@ There are plenty of users on Huawei devices that still have GMS, devices release
 
 ##### How to distribute the app only on GMS powered devices
 
-Before submitting a new version, specify in the *Review information* text field: `only GMS`. Having trouble locating the field? Instructions [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app#h1-1605230887778) , under *Completing other version information*.
+Before submitting a new version, specify in the *Review information* text field: `only GMS`. Having trouble locating the field? Instructions [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app#h1-1605230887778), under *Completing other version information*.
 
 Later, when a newer version doesn’t need anymore to be distributed only on GMS (because it supports HMS as well now), change the *Review information* text field to `GMS and HMS`. This is needed only if there was a `only GMS` mention previously, otherwise apps are by default distributed on GMS and HMS devices.
 
@@ -79,7 +79,7 @@ If you use [Google Play App Signing](https://developer.android.com/studio/publis
 
    Opting for this option on purpose makes sense in the situation you wish to distinguish updates coming via AG from the ones from GP for the same *applicationId*. Different signatures means that all updates will come only from the app store used to download the app in the first place. The other store will silently fail to update the app because signatures don't match.
    
-   **Warning**: [Google Play Protect](https://developers.google.com/android/play-protect) might block the initial app installation from AG since it detects that the version on GP is signed with a different key. You could try to file an appeal with Google [here](https://support.google.com/googleplay/android-developer/answer/2992033) , but their answers are not always satisfying: the approval process is as obscure and random as the initial app blocking.  To generalize from some data points: apps with lots of downloads on GP have a higher chance of a positive outcome of the appeal.
+   **Warning**: [Google Play Protect](https://developers.google.com/android/play-protect) might block the initial app installation from AG since it detects that the version on GP is signed with a different key. You could try to file an appeal with Google [here](https://support.google.com/googleplay/android-developer/answer/2992033), but their answers are not always satisfying: the approval process is as obscure and random as the initial app blocking. To generalize from some data points: apps with lots of downloads on GP have a higher chance of a positive outcome of the appeal.
 
 **To summarize this step**, all you need to do for now is to to complete the app listing at [step 2](#step-2-create-listings-for-each-app) by creating a new release and uploading an apk/aab. More details [here](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-release_app).
 
@@ -89,7 +89,7 @@ If you use [Google Play App Signing](https://developer.android.com/studio/publis
 
 Before using any of the HMS SDKs  (see full offering here: https://developer.huawei.com/consumer/en/hms) there are several configuration steps.
 
-They are detailed [here](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-get-started) and again in this [codelab](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#0), but let's do a short summary of every step.
+They are detailed [here](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-get-started) and again in this [codelab](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html), but let's do a short summary of every step.
 
 ##### Create a project in AG
 
@@ -103,7 +103,7 @@ Correctly [setting the data location](https://developer.huawei.com/consumer/en/d
 
 Your app's Android project has to contain a special configuration file - same as for Google Play and the *google-services.json*. This file can be easily generated from AG immediately after creating a new app on the portal or at any time from *App Information* under *General information*. Later changes in the used AG APIs could add additional information to the file, so you might need to re-generate it.
 
-Back to your Android project, place the file under the module that uses HMS SDKs (usually that's the main module  */app*). 
+Back to your Android project, place the file under the module that uses HMS SDKs (usually that's the main module */app*). 
 
 *What if you have multiple build variants and/or flavors that alter the applicationId?*
 
@@ -153,7 +153,7 @@ dependencies {
 }
 ```
 
-Check the newest version of any dependency [here](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/hmssdk-kit-0000001050042513#EN-US_TOPIC_0000001050042513__section19904112219278).
+Check the newest version of any dependency [here](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/hmssdk-kit-0000001050042513#EN-US_TOPIC_0000001050042513__section17370146238).
 
 
 
@@ -245,7 +245,7 @@ Or, maybe you have code that makes use of more features from [GoogleApiAvailabil
 }
 ```
 
-Again, the [HMS equivalent API](https://developer.huawei.com/consumer/en/doc/HMSCore-References-V5/huaweiapiavailability-0000001050121134-V5) is identical, so you could add a new constant `REQUEST_CODE_HMS_CHECK` and a method to check and respond to a missing HMS Core:
+Again, the [HMS equivalent API](https://developer.huawei.com/consumer/en/doc/HMSCore-References/huaweiapiavailability-0000001050121134) is identical, so you could add a new constant `REQUEST_CODE_HMS_CHECK` and a method to check and respond to a missing HMS Core:
 
 ```java
 void startHmsCheck() {
@@ -322,7 +322,7 @@ Available to use now are these 2 wrapper libraries for:
 - Fused Location: https://github.com/abusuioc/hms-gms-wrapper-location
 - Maps: https://github.com/franalma/MapsWrapper (with a Kotlin only variant: https://github.com/m0skit0/maps-wrapper)
 
-Consider also this (Kotlin only) collection of wrappers if you accept a few changes in your code: https://github.com/bluesource/ChoiceSDK .
+Consider also this (Kotlin only) collection of wrappers if you accept a few changes in your code: https://github.com/bluesource/ChoiceSDK
 
 
 
@@ -377,16 +377,16 @@ Before anything:
 
 The main things you can do:
 
-- generate a push token for the current session so that you can send transactional push messages: [how to](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-client-dev-0000001050042041#EN-US_TOPIC_0000001078601368__section876955375919)
-- in addition to receiving simple notifications messages, you could register a [Service](https://developer.android.com/guide/components/services) for receiving data messages: [how to](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-client-dev-0000001050042041#EN-US_TOPIC_0000001078601368__section161573511014)
+- generate a push token for the current session so that you can send transactional push messages: [how to](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-client-dev-0000001050042041#EN-US_TOPIC_0000001133945413__section876955375919)
+- in addition to receiving simple notifications messages, you could register a [Service](https://developer.android.com/guide/components/services) for receiving data messages: [how to](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/android-basic-receivemsg-0000001087370610#EN-US_TOPIC_0000001087370610__section1021703451115)
 
 ###### Configure your backend to send push notifications via the HMS Push Server
 
-The HMS Push Server exposes a REST API with full specs [here](https://developer.huawei.com/consumer/en/doc/HMSCore-References-V5/https-send-api-0000001050986197-V5  ).
+The HMS Push Server exposes a REST API with full specs [here](https://developer.huawei.com/consumer/en/doc/HMSCore-References/https-send-api-0000001050986197).
 
 A full example implementation is provided by Java code samples that call this API: https://github.com/HMS-Core/hms-push-serverdemo-java 
 
-Authentication is done via an access token: https://developer.huawei.com/consumer/en/doc/development/parts-Guides/generating_app_level_access_token . Currently, the validity period is 1h (returned with the token response). To refresh the token, simply call the same endpoint again. You can find an example here: https://github.com/HMS-Core/hms-push-serverdemo-java/blob/master/src/main/java/com/huawei/push/messaging/HuaweiCredential.java 
+Authentication is done via an access token: https://developer.huawei.com/consumer/en/doc/development/parts-Guides/generating_app_level_access_token. Currently, the validity period is 1h (returned with the token response). To refresh the token, simply call the same endpoint again. You can find an example here: https://github.com/HMS-Core/hms-push-serverdemo-java/blob/master/src/main/java/com/huawei/push/messaging/HuaweiCredential.java 
 
 
 
