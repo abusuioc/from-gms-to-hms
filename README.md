@@ -339,7 +339,7 @@ First of all, if you're using an SDK from the following push notifications provi
 | [Airship](https://www.airship.com/)                          | https://docs.airship.com/platform/android/getting-started/#hms |
 | [Accengage](https://www.accengage.com/)                      | Uses Airship                                                 |
 | [Batch](https://doc.batch.com/)                              | https://doc.batch.com/android/huawei                         |
-| [Braze](https://www.braze.com/)                              | https://www.braze.com/docs/developer_guide/platform_integration_guides/android/push_notifications/huawei_integration/ |
+| [Braze](https://www.braze.com/)                              | https://www.braze.com/docs/developer_guide/platform_integration_guides/android/push_notifications/android/integration/huawei_integration/ |
 | [Catch Media](https://docs.catchmedia.com/)                  | https://docs.catchmedia.com/SDK/Android/#hms-push-notifications |
 | [CleverTap](https://clevertap.com/)                          | https://developer.clevertap.com/docs/clevertap-huawei-push-integration |
 | [Countly](https://count.ly/)                                 | https://support.count.ly/hc/en-us/articles/360037754031-Android#integrating-hms-into-your-app |
