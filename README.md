@@ -119,9 +119,7 @@ AG will reject any API requests if your app's signing configuration is unknown t
 
 [This](https://developers.google.com/android/guides/client-auth) is a quick guide on how to retrieve the fingerprint for all the signing configurations. Just remember AG accepts only [SHA-256](https://en.wikipedia.org/wiki/SHA-2).
 
-##### Configure the build.gradle files
-
-Into your Android project's <u>root</u> *build.gradle*:
+##### Configure the root build.gradle file
 
 ```groovy
 allprojects {
@@ -138,22 +136,12 @@ buildscript {
     }
     ...
     dependencies {  
-		classpath 'com.huawei.agconnect:agcp:1.4.2.301' 
+		classpath 'com.huawei.agconnect:agcp:1.6.3.300' 
 	}  
 }
 ```
 
-Into your project's module (i.e. *app/build.gradle*)
-
-```groovy
-apply plugin: 'com.huawei.agconnect'
-...
-dependencies {       
-	implementation 'com.huawei.agconnect:agconnect-core:1.4.2.301'     
-}
-```
-
-Check the newest version of any dependency [here](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/hmssdk-kit-0000001050042513#EN-US_TOPIC_0000001050042513__section17370146238).
+Check the newest versions of *agcp* [here](https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-sdk-changenotes-0000001058732550) and for any other dependency [here](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/hmssdk-kit-0000001050042513#EN-US_TOPIC_0000001050042513__section17370146238).
 
 
 
