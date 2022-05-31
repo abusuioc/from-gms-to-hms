@@ -333,7 +333,7 @@ First of all, if you're using an SDK from the following push notifications provi
 | [Countly](https://count.ly/)                                 | https://support.count.ly/hc/en-us/articles/360037754031-Android#integrating-hms-into-your-app |
 | [dEngage](https://dengage.com/)                              | https://dev.dengage.com/push-sdk/android/huawei              |
 | [Emarsys](https://emarsys.com/)                              | https://help.emarsys.com/hc/en-us/articles/4404278175505-Huawei-integration-Huawei-push-messaging-support |
-| [EMMA](https://emma.io/en/)                                  | https://support.emma.io/hc/en-us/articles/360014715100-Push-integration-with-Huawei |
+| [EMMA](https://emma.io/en/)                                  | https://developer.emma.io/en/android/integracion-sdk#push-notification-integration-with-huawei |
 | [Euromessage](https://www.euromsg.com/)                      | [https://relateddigital.atlassian.net/wiki/spaces/KB/pages/908525653/FCM+and+HMS+Integration+to+RMC ](https://relateddigital.atlassian.net/wiki/spaces/KB/pages/908525653/FCM+and+HMS+Integration+to+RMC) |
 | [InDigitall](https://indigitall.com/english)                 | https://docs.indigitall.com/es/indigitallsetup/mobilepushquickstart/android.html |
 | [Insider](https://useinsider.com/mobile-app/)                | https://mobile.useinsider.com/documentation?section=6&subsection=3 |
