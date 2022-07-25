@@ -326,8 +326,10 @@ First of all, if you're using an SDK from the following push notifications provi
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [Airship](https://www.airship.com/)                          | https://docs.airship.com/platform/android/getting-started/#hms |
 | [Accengage](https://www.accengage.com/)                      | Uses Airship                                                 |
+| [AppMetrica](https://appmetrica.yandex.com/about)            | https://appmetrica.yandex.com/docs/mobile-sdk-dg/push/android-other-push-services-settings.html#hms |
 | [Batch](https://doc.batch.com/)                              | https://doc.batch.com/android/huawei                         |
 | [Braze](https://www.braze.com/)                              | https://www.braze.com/docs/developer_guide/platform_integration_guides/android/push_notifications/android/integration/huawei_integration/ |
+| [Catapush](https://www.catapush.com/)                        | https://github.com/Catapush/catapush-docs/blob/master/AndroidSDK/DOCUMENTATION_PLATFORM_HMS_PUSHKIT.md |
 | [Catch Media](https://docs.catchmedia.com/)                  | https://docs.catchmedia.com/SDK/Android/#hms-push-notifications |
 | [CleverTap](https://clevertap.com/)                          | https://developer.clevertap.com/docs/clevertap-huawei-push-integration |
 | [Countly](https://count.ly/)                                 | https://support.count.ly/hc/en-us/articles/360037754031-Android#integrating-hms-into-your-app |
@@ -335,16 +337,30 @@ First of all, if you're using an SDK from the following push notifications provi
 | [Emarsys](https://emarsys.com/)                              | https://help.emarsys.com/hc/en-us/articles/4404278175505-Huawei-integration-Huawei-push-messaging-support |
 | [EMMA](https://emma.io/en/)                                  | https://developer.emma.io/en/android/integracion-sdk#push-notification-integration-with-huawei |
 | [Euromessage](https://www.euromsg.com/)                      | [https://relateddigital.atlassian.net/wiki/spaces/KB/pages/908525653/FCM+and+HMS+Integration+to+RMC ](https://relateddigital.atlassian.net/wiki/spaces/KB/pages/908525653/FCM+and+HMS+Integration+to+RMC) |
+| [Exponea](https://exponea.com/) ([Bloomreach](https://www.bloomreach.com/en)) | https://github.com/exponea/exponea-android-sdk/blob/develop/Documentation/PUSH.md |
+| [ImiMobile](https://imimobile.com/)                          | https://developers.imiconnect.io/docs/quickstart-guide-2#integrate-hms |
 | [InDigitall](https://indigitall.com/english)                 | https://docs.indigitall.com/es/indigitallsetup/mobilepushquickstart/android.html |
+| [Infobip](https://www.infobip.com/mobile-app-messaging)      | https://github.com/infobip/mobile-messaging-sdk-huawei       |
 | [Insider](https://useinsider.com/mobile-app/)                | https://mobile.useinsider.com/documentation?section=6&subsection=3 |
+| [JPush](https://docs.jiguang.cn/en/jpush/guideline/intro/)   | https://docs.jiguang.cn/en/jpush/client/Android/android_guide/ |
+| [Kaleyra](www.kaleyra.com/push-notifications/)               | https://developers.kaleyra.io/docs/home-kaleyra-cloud-developer-hub |
 | [Kumulos](https://www.kumulos.com/)                          | https://docs.kumulos.com/integration/android/                |
+| [Leanplum](https://www.leanplum.com/)                        | https://docs.leanplum.com/reference/huawei-push-kit-integration |
 | [MFMS](https://mfms.com/page/push)                           | https://mfms.com/page/notification                           |
 | [MoEngage](https://www.moengage.com/)                        | https://docs.moengage.com/docs/dashboard-configuring-huawei-push |
 | [Netmera](https://www.netmera.com/push-notifications-a-journey-into-netmera-platform/) | https://netmera.readme.io/docs/quick-start-4                 |
 | [Notificare](https://notificare.com/)                        | https://docs.notifica.re/guides/apps/services/hms/           |
 | [OneSignal](https://onesignal.com/)                          | https://documentation.onesignal.com/docs/huawei-sdk-setup    |
+| [PicUp](https://www.picup.io/)                               | https://www.picup.io/technology/                             |
 | [Plot Projects](https://www.plotprojects.com/)               | [https://files.plotprojects.com/documentation/#Overview](https://files.plotprojects.com/documentation/) |
 | [Proxi Cloud](https://developer.proxi.cloud/)                | https://developer.proxi.cloud/android/hcm-integration/       |
+| [PushBots](https://pushbots.com/)                            | https://github.com/pushbots/Huawei-sample                    |
+| [Pushwoosh](https://www.pushwoosh.com/)                      | https://docs.pushwoosh.com/platform-docs/pushwoosh-sdk/android-push-notifications/huawei-integration |
+| [Sendbird](https://sendbird.com/)                            | https://sendbird.com/docs/chat/v4/android/guides/push-notifications#2-push-notifications-for-hms |
+| [Swrve](https://www.swrve.com/)                              | https://docs.swrve.com/developer-documentation/integration/android/ |
+| [TPNS](https://intl.cloud.tencent.com/products/tpns)         | https://intl.cloud.tencent.com/document/product/1024/37176   |
+| [TwinPush](https://twinpush.com/)                            | https://developers.twinpush.com/developers/android#setup-huawei-hms-push-kit |
+| [WebEngage](https://webengage.com/)                          | https://docs.webengage.com/docs/huawei-push-integration      |
 | [Webinstats](https://www.webinstats.com/)                    | https://www.webinstats.com/blog/en/help/setup/#pushandroidconfig |
 | [WonderPUSH](https://www.wonderpush.com/)                    | https://docs.wonderpush.com/docs/huawei-mobile-services-hms-push-notification-support |
 | [Vizury](https://www.vizury.com/)                            | https://help.engage360.vizury.com/article/44-huawei-sdk-integration-guide |
